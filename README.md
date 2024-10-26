@@ -38,7 +38,7 @@
 
 ### Dependency Inversion Principle (DIP)
 
-Высокоуровневый модуль ([GameService](GuessingGame/Service/GameService.cs)) зависит от абстракций, а не от конкретики, благодаря DI.
+Высокоуровневый модуль ([GameService](GuessingGame/Services/GameService.cs)) зависит от абстракций, а не от конкретики, благодаря DI.
 
 <pre>
 public GameService(
