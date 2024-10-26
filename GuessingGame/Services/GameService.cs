@@ -69,11 +69,11 @@ namespace GuessingGame.Services
                 }
                 else if (comparison > 0)
                 {
-                    _userInteractionService.WriteMessage($"The target number is lower.");
+                    _userInteractionService.WriteMessage("Your guess is higher than the target.");
                 }
                 else
                 {
-                    _userInteractionService.WriteMessage($"The target number is higher.");
+                    _userInteractionService.WriteMessage("Your guess is lower than the target.");
                 }
             }
 
