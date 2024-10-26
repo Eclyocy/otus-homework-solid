@@ -1,5 +1,6 @@
 ﻿using GuessingGame.Interfaces;
-using Microsoft.Extensions.Configuration;
+using GuessingGame.Settings;
+using Microsoft.Extensions.Options;
 
 namespace GuessingGame.Services
 {
@@ -18,14 +19,15 @@ namespace GuessingGame.Services
             IGeneratorService generatorService,
             IGuessCheckService guessCheckService,
             IUserInteractionService userInteractionService,
-            IConfiguration configuration)
+            IOptions<GameSettings> gameSettingsOptions)
         {
             _guessCheckService = guessCheckService;
             _userInteractionService = userInteractionService;
 
-            _minValue = configuration.GetValue<int>("MinValue");
-            _maxValue = configuration.GetValue<int>("MaxValue");
-            _maxAttempts = configuration.GetValue<int>("MaxAttempts");
+            GameSettings gameSettings = gameSettingsOptions.Value;
+            _minValue = gameSettings.MinValue;
+            _maxValue = gameSettings.MaxValue;
+            _maxAttempts = gameSettings.MaxAttempts;
 
             _value = generatorService.GenerateValue(_minValue, _maxValue);
         }

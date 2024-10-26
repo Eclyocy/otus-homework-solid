@@ -1,5 +1,6 @@
 ﻿using GuessingGame.Interfaces;
 using GuessingGame.Services;
+using GuessingGame.Settings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -12,14 +13,17 @@ namespace GuessingGame
         {
             HostApplicationBuilder hostBuilder = Host.CreateApplicationBuilder();
 
+            hostBuilder.Configuration
+                .AddJsonFile("settings.json");
+
+            hostBuilder.Services
+                .Configure<GameSettings>(hostBuilder.Configuration.GetSection("GameSettings"));
+
             hostBuilder.Services
                 .AddSingleton<IGameService, GameService>()
                 .AddTransient<IGeneratorService, GeneratorService>()
                 .AddTransient<IUserInteractionService, UserInteractionService>()
                 .AddTransient<IGuessCheckService, GuessCheckService>();
-
-            hostBuilder.Configuration
-                .AddJsonFile("settings.json");
 
             ServiceProvider serviceProvider = hostBuilder.Services.BuildServiceProvider();
 

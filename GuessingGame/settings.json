@@ -1,5 +1,7 @@
 {
-  "MinValue": 0,
-  "MaxValue": 99,
-  "MaxAttempts": 10
+  "GameSettings": {
+    "MinValue": 1,
+    "MaxValue": 50,
+    "MaxAttempts": 5
+  }
 }
