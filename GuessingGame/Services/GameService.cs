@@ -1,4 +1,5 @@
 ﻿using GuessingGame.Interfaces;
+using GuessingGame.Models;
 using GuessingGame.Settings;
 using Microsoft.Extensions.Options;
 
@@ -15,6 +16,8 @@ namespace GuessingGame.Services
 
         private readonly int _value;
 
+        private readonly GameResult _gameResult;
+
         public GameService(
             IGeneratorService generatorService,
             IGuessCheckService guessCheckService,
@@ -30,9 +33,17 @@ namespace GuessingGame.Services
             _maxAttempts = gameSettings.MaxAttempts;
 
             _value = generatorService.GenerateValue(_minValue, _maxValue);
+
+            _gameResult = new()
+            {
+                IsUserWin = false,
+                AttemptsUsed = 0,
+                AttemptsTotal = _maxAttempts,
+                TargetNumber = _value
+            };
         }
 
-        public void Play()
+        public GameResult Play()
         {
             _userInteractionService.WriteMessage("Welcome to the game!");
             _userInteractionService.WriteMessage(
@@ -43,13 +54,18 @@ namespace GuessingGame.Services
                 _userInteractionService.WriteMessage($"Attempt number {i}: ");
 
                 int userGuess = _userInteractionService.ReadValue(_minValue, _maxValue);
+                _gameResult.AttemptsUsed++;
 
                 int comparison = _guessCheckService.CompareTo(userGuess, _value);
 
                 if (comparison == 0)
                 {
-                    _userInteractionService.WriteMessage($"Congratulations! You have guessed correctly the {_value}!");
-                    return;
+                    _userInteractionService.WriteMessage(
+                        $"Congratulations! You have guessed the value {_value} correctly!");
+
+                    _gameResult.IsUserWin = true;
+
+                    return _gameResult;
                 }
                 else if (comparison > 0)
                 {
@@ -62,7 +78,9 @@ namespace GuessingGame.Services
             }
 
             _userInteractionService.WriteMessage("Sorry, you are out of attempts.");
-            _userInteractionService.WriteMessage($"(By the way, the number is {_value}.)");
+            _userInteractionService.WriteMessage($"(By the way, the number was {_value}.)");
+
+            return _gameResult;
         }
     }
 }

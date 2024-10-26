@@ -1,7 +1,9 @@
-﻿namespace GuessingGame.Interfaces
+﻿using GuessingGame.Models;
+
+namespace GuessingGame.Interfaces
 {
     public interface IGameService
     {
-        void Play();
+        GameResult Play();
     }
 }

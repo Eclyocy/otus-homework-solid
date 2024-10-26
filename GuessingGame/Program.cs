@@ -1,4 +1,5 @@
 ﻿using GuessingGame.Interfaces;
+using GuessingGame.Models;
 using GuessingGame.Services;
 using GuessingGame.Settings;
 using Microsoft.Extensions.Configuration;
@@ -20,7 +21,7 @@ namespace GuessingGame
                 .Configure<GameSettings>(hostBuilder.Configuration.GetSection("GameSettings"));
 
             hostBuilder.Services
-                .AddSingleton<IGameService, GameService>()
+                .AddTransient<IGameService, GameService>()
                 .AddTransient<IGeneratorService, GeneratorService>()
                 .AddTransient<IUserInteractionService, UserInteractionService>()
                 .AddTransient<IGuessCheckService, GuessCheckService>();
@@ -28,7 +29,9 @@ namespace GuessingGame
             ServiceProvider serviceProvider = hostBuilder.Services.BuildServiceProvider();
 
             IGameService gameService = serviceProvider.GetRequiredService<IGameService>();
-            gameService.Play();
+            GameResult gameResult = gameService.Play();
+
+            Console.WriteLine(gameResult);
         }
     }
 }
