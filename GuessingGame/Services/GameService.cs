@@ -42,7 +42,7 @@ namespace GuessingGame.Services
             {
                 _userInteractionService.WriteMessage($"Attempt number {i}: ");
 
-                int userGuess = _userInteractionService.ReadValue();
+                int userGuess = _userInteractionService.ReadValue(_minValue, _maxValue);
 
                 int comparison = _guessCheckService.CompareTo(userGuess, _value);
 

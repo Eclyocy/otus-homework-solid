@@ -2,7 +2,7 @@
 {
     public interface IUserInteractionService
     {
-        int ReadValue();
+        int ReadValue(int minValue, int maxValue);
 
         void WriteMessage(string message);
     }

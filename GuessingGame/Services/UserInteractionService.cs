@@ -4,7 +4,7 @@ namespace GuessingGame.Services
 {
     public class UserInteractionService : IUserInteractionService
     {
-        public int ReadValue()
+        public int ReadValue(int minValue, int maxValue)
         {
             while (true)
             {
@@ -12,12 +12,17 @@ namespace GuessingGame.Services
 
                 if (int.TryParse(userInput, out int result))
                 {
+                    if (minValue > result || maxValue < result)
+                    {
+                        WriteMessage($"The number should be inside [{minValue}, {maxValue}]. Please, try again.");
+
+                        continue;
+                    }
+
                     return result;
                 }
-                else
-                {
-                    WriteMessage($"Sorry, your input ({userInput}) was not recognized. Please, try again.");
-                }
+
+                WriteMessage($"Sorry, your input ({userInput ?? "null"}) was not recognized. Please, try again.");
             }
         }
 
