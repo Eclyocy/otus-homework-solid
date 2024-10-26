@@ -30,6 +30,7 @@
 
 ### Liskov Substitution Principle (LSP)
 
+Любой интерфейс можно заменить на его конкретную имплементацию, не меняя логику программы.
 
 ### Interface Segregation Principle (ISP)
 
