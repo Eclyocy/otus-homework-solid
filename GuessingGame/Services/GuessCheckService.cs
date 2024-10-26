@@ -1,12 +1,18 @@
 ﻿using GuessingGame.Interfaces;
+using GuessingGame.Models;
 
 namespace GuessingGame.Services
 {
     public class GuessCheckService : IGuessCheckService
     {
-        public int CompareTo(int userGuess, int target)
+        public GuessResult Check(int userGuess, int target)
         {
-            return userGuess.CompareTo(target);
+            return userGuess.CompareTo(target) switch
+            {
+                0 => GuessResult.Correct,
+                > 0 => GuessResult.TooHigh,
+                _ => GuessResult.TooLow
+            };
         }
     }
 }

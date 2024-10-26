@@ -56,31 +56,31 @@ namespace GuessingGame.Services
                 int userGuess = _userInteractionService.ReadValue(_minValue, _maxValue);
                 _gameResult.AttemptsUsed++;
 
-                int comparison = _guessCheckService.CompareTo(userGuess, _value);
+                GuessResult attemptResult = _guessCheckService.Check(userGuess, _value);
+                string attemptMessage = GetMessage(attemptResult);
 
-                if (comparison == 0)
+                _userInteractionService.WriteMessage(attemptMessage);
+
+                if (attemptResult == GuessResult.Correct)
                 {
-                    _userInteractionService.WriteMessage(
-                        $"Congratulations! You have guessed the value {_value} correctly!");
-
                     _gameResult.IsUserWin = true;
 
                     return _gameResult;
                 }
-                else if (comparison > 0)
-                {
-                    _userInteractionService.WriteMessage("Your guess is higher than the target.");
-                }
-                else
-                {
-                    _userInteractionService.WriteMessage("Your guess is lower than the target.");
-                }
             }
 
             _userInteractionService.WriteMessage("Sorry, you are out of attempts.");
-            _userInteractionService.WriteMessage($"(By the way, the number was {_value}.)");
+            _userInteractionService.WriteMessage($"The number was {_value}.");
 
             return _gameResult;
         }
+
+        private string GetMessage(GuessResult result) => result switch
+        {
+            GuessResult.Correct => $"Congratulations! You have guessed the value {_value} correctly!",
+            GuessResult.TooHigh => "Your guess is higher than the target.",
+            GuessResult.TooLow => "Your guess is lower than the target.",
+            _ => throw new ArgumentOutOfRangeException(nameof(result), $"{result} is not supported.")
+        };
     }
 }

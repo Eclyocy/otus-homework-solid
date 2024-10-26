@@ -1,7 +1,9 @@
-﻿namespace GuessingGame.Interfaces
+﻿using GuessingGame.Models;
+
+namespace GuessingGame.Interfaces
 {
     public interface IGuessCheckService
     {
-        int CompareTo(int userGuess, int target);
+        GuessResult Check(int userGuess, int target);
     }
 }
