@@ -36,7 +36,7 @@ namespace GuessingGame.Services
             _userInteractionService.WriteMessage(
                 $"You have {_maxAttempts} attempts to guess a number between {_minValue} and {_maxValue}.");
 
-            for (int i = 0; i < _maxAttempts; ++i)
+            for (int i = 1; i <= _maxAttempts; i++)
             {
                 _userInteractionService.WriteMessage($"Attempt number {i}: ");
 
