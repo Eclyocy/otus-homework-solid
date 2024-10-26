@@ -4,7 +4,8 @@ namespace GuessingGame.Services
 {
     public class UserInteractionService : IUserInteractionService
     {
-        public int ReadValue(int minValue, int maxValue)
+        /// <inheritdoc/>
+        public int ReadValidatedValue(int minValue, int maxValue)
         {
             while (true)
             {
@@ -26,6 +27,7 @@ namespace GuessingGame.Services
             }
         }
 
+        /// <inheritdoc/>
         public void WriteMessage(string message)
         {
             Console.WriteLine(message);

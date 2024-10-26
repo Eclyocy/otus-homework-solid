@@ -5,7 +5,8 @@ namespace GuessingGame.Services
 {
     public class GuessCheckService : IGuessCheckService
     {
-        public GuessResult Check(int userGuess, int target)
+        /// <inheritdoc/>
+        public GuessResult CompareTo(int userGuess, int target)
         {
             return userGuess.CompareTo(target) switch
             {

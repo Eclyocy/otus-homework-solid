@@ -53,10 +53,10 @@ namespace GuessingGame.Services
             {
                 _userInteractionService.WriteMessage($"Attempt number {i}: ");
 
-                int userGuess = _userInteractionService.ReadValue(_minValue, _maxValue);
+                int userGuess = _userInteractionService.ReadValidatedValue(_minValue, _maxValue);
                 _gameResult.AttemptsUsed++;
 
-                GuessResult attemptResult = _guessCheckService.Check(userGuess, _value);
+                GuessResult attemptResult = _guessCheckService.CompareTo(userGuess, _value);
                 string attemptMessage = GetMessage(attemptResult);
 
                 _userInteractionService.WriteMessage(attemptMessage);
